@@ -1,0 +1,59 @@
+/* set default font family and size */
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* center form and result div */
+form, .result {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+/* style form inputs */
+form input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+form input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* style result table */
+.result table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.result th, .result td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.result th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+/* media queries for responsive design */
+@media screen and (max-width: 600px) {
+  form, .result {
+    width: 100%;
+  }
+}
