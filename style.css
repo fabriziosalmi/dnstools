@@ -23,6 +23,7 @@ form input[type=text] {
   border: 2px solid #ccc;
   border-radius: 4px;
   font-size: larger;
+  color: #6c6c6c;
 }
 
 form input[type=submit] {
