@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNS Resolution Comparison Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>DNS Resolution Comparison Tool</h1>
+    <form method="post" action="#">
+        <label for="fqdn">Enter FQDN:</label>
+        <input type="text" name="fqdn" id="fqdn" required>
+        <button type="submit">Compare</button>
+    </form>
+
+    <div id="result" style="display:none">
+        <h2>Results for <span id="fqdnResult"></span>:</h2>
+        <table>
+            <tr>
+                <th>DNS Server</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>dns1.p01.nsone.net</td>
+                <td id="nsoneResult"></td>
+            </tr>
+            <tr>
+                <td>dilbert.ns.cloudflare.com</td>
+                <td id="cloudflareResult"></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault(); // prevent page refresh
+
+            // Get the entered FQDN
+            var fqdn = document.querySelector('#fqdn').value;
+
+            // Send AJAX requests to get DNS resolution
+            var nsoneRequest = new XMLHttpRequest();
+            nsoneRequest.open('GET', 'https://dns.google/resolve?name=' + fqdn + '&type=A&cd=0&edns=0', true);
+            nsoneRequest.onload = function() {
+                var nsoneResponse = JSON.parse(this.responseText);
+                var nsoneResult = "";
+                if (nsoneResponse.Status == 0) {
+                    nsoneResult = nsoneResponse.Answer[0].data;
+                }
+                document.querySelector('#nsoneResult').textContent = nsoneResult;
+            };
+            nsoneRequest.send();
+
+            var cloudflareRequest = new XMLHttpRequest();
+            cloudflareRequest.open('GET', 'https://cloudflare-dns.com/dns-query?name=' + fqdn + '&type=A', true);
+            cloudflareRequest.setRequestHeader('accept', 'application/dns-json');
+            cloudflareRequest.onload = function() {
+                var cloudflareResponse = JSON.parse(this.responseText);
+                var cloudflareResult = "";
+                if (cloudflareResponse.Status == 0) {
+                    cloudflareResult = cloudflareResponse.Answer[0].data;
+                }
+                document.querySelector('#cloudflareResult').textContent = cloudflareResult;
+            };
+            cloudflareRequest.send();
+
+            // Show the results div
+            document.querySelector('#fqdnResult').textContent = fqdn;
+            document.querySelector('#result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
