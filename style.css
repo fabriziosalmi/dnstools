@@ -63,3 +63,7 @@ form input[type=submit]:hover {
     font-size: larger;
     font-weight: lighter;
 }
+
+h2 {
+    font-size: large;
+}
