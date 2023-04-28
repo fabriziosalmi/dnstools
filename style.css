@@ -11,6 +11,7 @@ body {
 form, .result {
   margin: 0 0;
   max-width: 600px;
+  padding-bottom: 20px;
 }
 
 /* style form inputs */
